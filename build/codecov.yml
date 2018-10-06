@@ -1,6 +1,7 @@
 steps:
 - script: |
     #bash <(curl -s https://codecov.io/bash)
+    cd $(Build.SourcesDirectory)/build
     chmod 755 codecov.sh
     ./codecov.sh
   displayName: 'Execute https://codecov.io/bash'
@@ -9,4 +10,4 @@ steps:
   displayName: 'Publish code coverage results'
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(Build.SourcesDirectory)\tests\LineBot.Tests\coverage.cobertura.xml'
+    summaryFileLocation: '$(Build.SourcesDirectory)/tests/LineBot.Tests/coverage.cobertura.xml'
