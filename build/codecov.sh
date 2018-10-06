@@ -735,17 +735,23 @@ then
   remote_addr="${CI_BUILD_REPO:-$CI_REPOSITORY_URL}"
   commit="${CI_BUILD_REF:-$CI_COMMIT_SHA}"
 
-elif [ "$AZURE_HTTP_USER_AGENT" != "" ];
+elif [ "$SYSTEM_TEAMFOUNDATIONSERVERURI" != "" ];
 then
-  say "$e==>$x Azure DevOps detected."
+  say "$e==>$x Azure Pipelines detected."
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=vsts
-  service="azure-devops"
-  branch="$BUILD_SOURCEBRANCH"
-  build="$BUILD_BUILDNUMBER"
-  build_url=$(urlencode "${SYSTEM_TEAMFOUNDATIONSERVERURI}/${SYSTEM_TEAMPROJECT}/_build/results?buildId=${BUILD_BUILDID}")
-  pr="$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER"
+  #service="azure-devops"
   commit="$BUILD_SOURCEVERSION"
-  
+  build="$BUILD_BUILDNUMBER"
+  if [ "$PULL_REQUEST_NUMBER" != "$PULL_REQUEST_ID" ];
+  then
+    pr="$PULL_REQUEST_NUMBER"
+  else
+    pr="$PULL_REQUEST_ID"
+  fi
+  job="${BUILD_BUILDID}"
+  branch="$BUILD_SOURCEBRANCH"
+  #build_url=$(urlencode "${SYSTEM_TEAMFOUNDATIONSERVERURI}/${SYSTEM_TEAMPROJECT}/_build/results?buildId=")
+
 else
   say "${r}x>${x} No CI provider detected."
   say "    Testing inside Docker? ${b}http://docs.codecov.io/docs/testing-with-docker${x}"
@@ -1508,29 +1514,19 @@ else
       then
         s3target=$(echo "$res" | sed -n 2p)
         say "    ${e}->${x} Uploading"
-        s3=$(curl $curl_s -X PUT $curlawsargs \
+        s3=$(curl $curl_s -fiX PUT $curlawsargs \
                   --data-binary @$upload_file.gz \
                   -H 'Content-Type: application/x-gzip' \
                   -H 'Content-Encoding: gzip' \
                   -H 'x-amz-acl: public-read' \
                   "$s3target" || true)
-        echo $s3
-        exit 0
-        # if [ "$s3" != "" ];
-        # then
-        #   say "    ${g}->${x} View reports at ${b}$(echo "$res" | sed -n 1p)${x}"
-        #   exit 0
-        # else
-        #   say "    ${r}X>${x} Failed to upload"
-        #   say "$status"
-        #   status=$(echo "$s3" | head -1 | grep 'HTTP ' | cut -d' ' -f2)
-        #   say "$status"
-        #   if [ "$status" = "400" ];
-        #   then
-        #     say "${g}${s3}${x}"
-        #     exit ${exit_with}
-        #   fi
-        # fi
+        if [ "$s3" != "" ];
+        then
+          say "    ${g}->${x} View reports at ${b}$(echo "$res" | sed -n 1p)${x}"
+          exit 0
+        else
+          say "    ${r}X>${x} Failed to upload"
+        fi
       elif [ "$status" = "400" ];
       then
           # 400 Error
