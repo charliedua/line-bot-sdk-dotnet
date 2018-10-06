@@ -1520,6 +1520,11 @@ else
           exit 0
         else
           say "    ${r}X>${x} Failed to upload"
+          if [ "$s3" = "400" ];
+          then
+            say "${g}${res}${x}"
+            exit ${exit_with}
+          fi
         fi
       elif [ "$status" = "400" ];
       then
