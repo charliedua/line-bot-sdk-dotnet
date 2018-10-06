@@ -2,6 +2,7 @@ steps:
 - script: |
     #bash <(curl -s https://codecov.io/bash)
     cd $(Build.SourcesDirectory)/build
+    env
     chmod 755 codecov.sh
     ./codecov.sh
   displayName: 'Execute https://codecov.io/bash'
