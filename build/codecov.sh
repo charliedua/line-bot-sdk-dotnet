@@ -742,7 +742,7 @@ then
   service="azure-devops"
   branch="$BUILD_SOURCEBRANCH"
   build="$BUILD_BUILDNUMBER"
-  build_url="$(urlencode "${SYSTEM_TEAMFOUNDATIONSERVERURI}/${SYSTEM_TEAMPROJECT}/_build/results?buildId=${BUILD_BUILDID}")
+  build_url=$(urlencode "${SYSTEM_TEAMFOUNDATIONSERVERURI}/${SYSTEM_TEAMPROJECT}/_build/results?buildId=${BUILD_BUILDID}")
   pr="$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER"
   commit="$BUILD_SOURCEVERSION"
   
