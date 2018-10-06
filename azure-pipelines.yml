@@ -1,11 +1,11 @@
 name: $(Date:yyyyMMdd.HHmm)
 
 jobs:
-- job: Windows
-  pool:
-    vmImage: 'VS2017-Win2016'
-  steps:
-  - template: build/build.yml
+# - job: Windows
+#   pool:
+#     vmImage: 'VS2017-Win2016'
+#   steps:
+#   - template: build/build.yml
 
 - job: Linux
   pool:
@@ -14,8 +14,8 @@ jobs:
   - template: build/build.yml
   - template: build/codecov.yml
 
-- job: macOS
-  pool:
-    vmImage: 'macOS 10.13'
-  steps:
-  - template: build/build.yml
+# - job: macOS
+#   pool:
+#     vmImage: 'macOS 10.13'
+#   steps:
+#   - template: build/build.yml
