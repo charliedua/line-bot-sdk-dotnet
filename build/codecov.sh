@@ -741,8 +741,9 @@ then
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=vsts
   service="azure-devops"
   branch="$BUILD_SOURCEBRANCH"
-  build="$BUILD_BUILDNUMBER"  
-  remote_addr="$BUILD_REPOSITORY_URI"
+  build="$BUILD_BUILDNUMBER"
+  build_url="${SYSTEM_TEAMFOUNDATIONSERVERURI}/${SYSTEM_TEAMPROJECT}/_build/results?buildId=${BUILD_BUILDID}"
+  pr="$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER"
   commit="$BUILD_SOURCEVERSION"
   
 else
