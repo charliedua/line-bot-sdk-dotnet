@@ -1508,25 +1508,29 @@ else
       then
         s3target=$(echo "$res" | sed -n 2p)
         say "    ${e}->${x} Uploading"
-        s3=$(curl $curl_s -fiX PUT $curlawsargs \
+        s3=$(curl $curl_s -X PUT $curlawsargs \
                   --data-binary @$upload_file.gz \
                   -H 'Content-Type: application/x-gzip' \
                   -H 'Content-Encoding: gzip' \
                   -H 'x-amz-acl: public-read' \
                   "$s3target" || true)
-        if [ "$s3" != "" ];
-        then
-          say "    ${g}->${x} View reports at ${b}$(echo "$res" | sed -n 1p)${x}"
-          exit 0
-        else
-          say "    ${r}X>${x} Failed to upload"
-          status=$(echo "$s3" | head -1 | grep 'HTTP ' | cut -d' ' -f2)
-          if [ "$status" = "400" ];
-          then
-            say "${g}${s3}${x}"
-            exit ${exit_with}
-          fi
-        fi
+        echo $s3
+        exit 0
+        # if [ "$s3" != "" ];
+        # then
+        #   say "    ${g}->${x} View reports at ${b}$(echo "$res" | sed -n 1p)${x}"
+        #   exit 0
+        # else
+        #   say "    ${r}X>${x} Failed to upload"
+        #   say "$status"
+        #   status=$(echo "$s3" | head -1 | grep 'HTTP ' | cut -d' ' -f2)
+        #   say "$status"
+        #   if [ "$status" = "400" ];
+        #   then
+        #     say "${g}${s3}${x}"
+        #     exit ${exit_with}
+        #   fi
+        # fi
       elif [ "$status" = "400" ];
       then
           # 400 Error
