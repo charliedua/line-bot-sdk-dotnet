@@ -740,6 +740,7 @@ then
   say "$e==>$x Azure Pipelines detected."
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=vsts
   #service="azure-devops"
+  service="appveyor"
   commit="$BUILD_SOURCEVERSION"
   build="$BUILD_BUILDNUMBER"
   if [ "$PULL_REQUEST_NUMBER" != "$PULL_REQUEST_ID" ];

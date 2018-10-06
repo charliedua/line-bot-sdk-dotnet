@@ -12,7 +12,7 @@ jobs:
     vmImage: 'Ubuntu 16.04'
   steps:
   - template: build/build.yml
-  - template: build/codecov.yml
+  - template: build/codecoverage.yml
 
 # - job: macOS
 #   pool:
