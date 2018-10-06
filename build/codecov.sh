@@ -1520,9 +1520,10 @@ else
           exit 0
         else
           say "    ${r}X>${x} Failed to upload"
-          if [ "$s3" = "400" ];
+          status=$(echo "$s3" | head -1 | grep 'HTTP ' | cut -d' ' -f2)
+          if [ "$status" = "400" ];
           then
-            say "${g}${res}${x}"
+            say "${g}${s3}${x}"
             exit ${exit_with}
           fi
         fi
