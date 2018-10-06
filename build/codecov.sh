@@ -749,7 +749,7 @@ then
     pr="$PULL_REQUEST_ID"
   fi
   job="${BUILD_BUILDID}"
-  branch="$BUILD_SOURCEBRANCH"
+  branch="$BUILD_SOURCEBRANCHNAME"
   #build_url=$(urlencode "${SYSTEM_TEAMFOUNDATIONSERVERURI}/${SYSTEM_TEAMPROJECT}/_build/results?buildId=")
 
 else
@@ -1504,6 +1504,7 @@ else
     do
       i=$[$i+1]
       say "    ${e}->${x} Pinging Codecov"
+      say "$url/upload/v4?$query"
       res=$(curl $curl_s -X POST $curlargs $cacert \
             -H 'X-Reduced-Redundancy: false' \
             -H 'X-Content-Type: application/x-gzip' \
