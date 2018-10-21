@@ -739,7 +739,7 @@ elif [ "$SYSTEM_TEAMFOUNDATIONSERVERURI" != "" ];
 then
   say "$e==>$x Azure Pipelines detected."
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=vsts
-  service="azure-pipelines"
+  service="azure_pipelines"
   commit="$BUILD_SOURCEVERSION"
   build="$BUILD_BUILDNUMBER"
   if [ "$PULL_REQUEST_NUMBER" != "$PULL_REQUEST_ID" ];
