@@ -4,7 +4,7 @@ steps:
     cd $(Build.SourcesDirectory)/build
     env
     chmod 755 codecov.sh
-    ./codecov.sh -K -f !build/codecoverage.yml
+    ./codecov.sh -K -f !codecoverage.yml
   displayName: 'Execute https://codecov.io/bash'
 
 - task: PublishCodeCoverageResults@1
